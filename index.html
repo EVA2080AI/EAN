@@ -13,14 +13,11 @@
                 extend: {
                     colors: {
                         ean: {
-                            dark: '#0f172a',    // Slate 900 (Fondo Profesional)
                             blue: '#003366',    // Azul Institucional
                             lime: '#84cc16',    // Verde Acento
-                            surface: '#ffffff'
+                            dark: '#0f172a',    // Header Oscuro
+                            slate_dark: '#334155' // Texto legible
                         }
-                    },
-                    animation: {
-                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     }
                 }
             }
@@ -28,455 +25,452 @@
     </script>
 
     <style>
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f1f5f9; color: #334155; }
+        /* FONDO RESTAURADO: Blanco/Gris muy claro para máxima legibilidad */
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f8fafc; color: #1e293b; line-height: 1.6; }
         
-        /* Header Glass */
-        .header-pro {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+        /* Header Profesional */
+        .header-pro { background: #000000; border-bottom: 3px solid #84cc16; }
+        
+        /* Secciones Claras */
+        section { scroll-margin-top: 100px; padding: 4rem 1rem; border-bottom: 1px solid #e2e8f0; }
+        
+        /* Badges de Capítulos */
+        .chapter-badge { 
+            font-size: 0.75rem; 
+            font-weight: 800; 
+            color: #003366; 
+            background: #ecfccb; 
+            padding: 0.3rem 0.8rem; 
+            border-radius: 4px; 
+            text-transform: uppercase; 
+            margin-bottom: 1rem; 
+            display: inline-block; 
+            letter-spacing: 0.05em; 
+            border: 1px solid #84cc16;
         }
-
-        /* Animación de entrada de filas */
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); background-color: #dcfce7; }
-            to { opacity: 1; transform: translateX(0); background-color: white; }
+        
+        /* Consola Prompt */
+        .terminal-window { 
+            background-color: #0f172a; 
+            border: 1px solid #334155; 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); 
         }
-        .new-row { animation: slideIn 1.5s ease-out forwards; }
-
-        section { scroll-margin-top: 140px; }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #003366; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #84cc16; }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased selection:bg-ean-lime selection:text-white">
 
-    <div id="scanner-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-32 transition-transform duration-500 bg-white border-l-4 border-ean-lime shadow-2xl p-4 rounded-r-lg max-w-sm flex items-center gap-3">
-        <div class="relative">
-            <div class="absolute inset-0 bg-green-400 rounded-full animate-ping opacity-75"></div>
-            <i class="fas fa-satellite-dish relative z-10 text-ean-lime"></i>
-        </div>
-        <div>
-            <h4 class="font-bold text-xs text-gray-900 uppercase tracking-wide">Radar Activo</h4>
-            <p id="scanner-text" class="text-xs text-gray-500">Detectando nuevas IAs...</p>
-        </div>
-    </div>
-
-    <nav class="fixed w-full z-50 header-pro h-20 transition-all shadow-lg">
+    <nav class="fixed w-full z-50 header-pro h-20 shadow-2xl">
         <div class="max-w-7xl mx-auto px-4 h-full flex justify-between items-center">
             <div class="flex items-center gap-4">
-                <img src="https://universidadean.edu.co/sites/default/files/logo-horizontal-es.png" alt="Universidad Ean" class="h-8 w-auto brightness-0 invert opacity-90">
-                <div class="hidden md:block border-l border-white/20 pl-4">
-                    <p class="text-[10px] text-ean-lime font-bold tracking-widest uppercase">Diplomado en Inteligencia Artificial para la Alta Dirección</p>
-                    
+                <img src="https://universidadean.edu.co/sites/default/files/logo-horizontal-es.png" alt="Ean" class="h-8 w-auto brightness-0 invert">
+                <div class="hidden lg:block border-l border-white/20 pl-4 text-white">
+                    <p class="text-[10px] text-ean-lime font-bold uppercase tracking-widest">Diplomado Alta Dirección</p>
+                    <p class="text-xs font-bold uppercase tracking-tight">AI Management Hub v11.0</p>
                 </div>
             </div>
-
-            <div class="hidden lg:flex gap-6 text-sm font-semibold text-gray-300">
-                <a href="#intro" class="hover:text-ean-lime transition py-2">Inicio</a>
-                <a href="#monitor" class="hover:text-ean-lime transition py-2"><i class="fas fa-search mr-1"></i> Monitor</a>
-                <a href="#prompt-lab" class="hover:text-ean-lime transition py-2"><i class="fas fa-flask mr-1"></i> Prompt Lab</a>
-                <a href="#automations" class="hover:text-ean-lime transition py-2"><i class="fas fa-bolt mr-1"></i> Automatización</a>
-            </div>
-
-            <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10">
-                <div class="h-2 w-2 rounded-full bg-green-500 animate-pulse"></div>
-                <span class="text-[10px] font-mono text-gray-400">API: CONNECTED</span>
+            <div class="hidden xl:flex gap-6 text-[10px] font-bold text-gray-300 uppercase tracking-widest items-center">
+                <a href="#fundamentos" class="hover:text-ean-lime transition">1. Fundamentos</a>
+                <a href="#estructura" class="hover:text-ean-lime transition">2. Estructura</a>
+                <a href="#verificacion" class="hover:text-ean-lime transition">3. Verificación</a>
+                <a href="#patrones" class="hover:text-ean-lime transition">4. Patrones</a>
+                <a href="#lab" class="hover:text-ean-lime text-black bg-ean-lime px-3 py-1.5 rounded transition">5. Laboratorio</a>
+                <a href="#monitor" class="hover:text-ean-lime transition">6. Monitor</a>
+                <a href="#actividad" class="hover:text-ean-lime transition">7. Actividad</a>
             </div>
         </div>
     </nav>
 
-    <main class="pt-20">
+    <header class="pt-32 pb-20 bg-ean-dark text-white text-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-blue-900/20 to-transparent"></div>
+        <div class="max-w-4xl mx-auto px-4 relative z-10">
+            <h1 class="text-4xl md:text-6xl font-black mb-6 tracking-tight">Estrategia Gerencial con <br><span class="text-ean-lime">Inteligencia Artificial</span></h1>
+            <p class="text-slate-300 text-lg leading-relaxed max-w-2xl mx-auto">
+                Plataforma de comando: Fundamentos, Ingeniería de Prompts, Herramientas y Simulación de Crisis.
+            </p>
+        </div>
+    </header>
 
-        <section id="intro" class="bg-ean-dark text-white py-20 relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-ean-blue/50 to-transparent"></div>
-            
-            <div class="max-w-7xl mx-auto px-4 relative z-10 text-center md:text-left">
-                <div class="md:w-2/3">
-                    <span class="text-ean-lime font-bold tracking-widest text-xs uppercase mb-2 block">Módulo 1: Fundamentos</span>
-                    <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">Domine la Inteligencia Artificial <br>antes de que ella domine su mercado.</h1>
-                    <p class="text-gray-400 text-lg mb-8 leading-relaxed">
-                        Esta plataforma ha sido diseñada para filtrar el ruido. Aquí encontrará solo las herramientas verificadas, los prompts estructurados y las automatizaciones que generan ROI real para la Alta Dirección.
-                    </p>
-                    <div class="flex flex-col md:flex-row gap-4 justify-center md:justify-start">
-                        <a href="#monitor" class="px-6 py-3 bg-ean-lime text-ean-dark font-bold rounded-lg hover:bg-lime-400 transition shadow-lg shadow-lime-900/50 flex items-center justify-center gap-2">
-                            <i class="fas fa-search"></i> Explorar Herramientas
-                        </a>
-                        <a href="#prompt-lab" class="px-6 py-3 border border-white/30 text-white font-bold rounded-lg hover:bg-white/10 transition flex items-center justify-center gap-2">
-                            <i class="fas fa-graduation-cap"></i> Aprender a Promptear
-                        </a>
+    <main class="max-w-7xl mx-auto px-4">
+
+        <section id="fundamentos">
+            <div class="max-w-4xl">
+                <span class="chapter-badge">Capítulo 01</span>
+                <h2 class="text-3xl font-bold text-ean-blue mb-4">Fundamentos de Interacción</h2>
+                <div class="prose prose-slate max-w-none text-slate-700 mb-8">
+                    <p class="text-lg"><strong>Objetivo:</strong> Comprender que la IA no es un buscador (Google), sino un <strong>Motor de Razonamiento Probabilístico</strong>.</p>
+                    <p>Para decisiones ejecutivas, debemos cambiar el "chip": no pida datos exactos (la IA puede alucinar), delegue procesos de análisis y redacción.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:border-ean-blue transition">
+                        <div class="text-ean-blue text-2xl mb-3"><i class="fas fa-dice-d20"></i></div>
+                        <h3 class="font-bold text-slate-900 mb-2">Probabilidad vs Verdad</h3>
+                        <p class="text-sm text-slate-600">El modelo predice la siguiente palabra más lógica. Usted pone la verificación de hechos.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:border-ean-lime transition">
+                        <div class="text-ean-lime text-2xl mb-3"><i class="fas fa-brain"></i></div>
+                        <h3 class="font-bold text-slate-900 mb-2">Extensión Cognitiva</h3>
+                        <p class="text-sm text-slate-600">Úsela como un analista junior incansable. Usted dirige, edita y aprueba.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:border-gray-400 transition">
+                        <div class="text-orange-500 text-2xl mb-3"><i class="fas fa-thermometer-half"></i></div>
+                        <h3 class="font-bold text-slate-900 mb-2">Temperatura</h3>
+                        <p class="text-sm text-slate-600">Baja (0.2) para informes financieros. Alta (0.8) para lluvia de ideas de marketing.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <div class="max-w-7xl mx-auto px-4 space-y-24 py-16">
+        <section id="estructura" class="bg-white">
+            <span class="chapter-badge">Capítulo 02</span>
+            <h2 class="text-3xl font-bold text-ean-blue mb-4">Estructuras de Prompts (R-C-R-K)</h2>
+            <p class="text-slate-700 text-lg mb-8 max-w-3xl">La calidad de la respuesta depende de la calidad de la instrucción. Use esta fórmula obligatoria para tareas directivas:</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                <div class="bg-blue-50 p-6 rounded-xl border-l-4 border-ean-blue">
+                    <strong class="text-2xl block text-ean-blue mb-1">R</strong>
+                    <span class="font-bold text-slate-800 block">ROL</span>
+                    <p class="text-xs text-slate-600 mt-1">¿Quién habla? (Ej: CFO Senior).</p>
+                </div>
+                <div class="bg-purple-50 p-6 rounded-xl border-l-4 border-purple-600">
+                    <strong class="text-2xl block text-purple-600 mb-1">C</strong>
+                    <span class="font-bold text-slate-800 block">CONTEXTO</span>
+                    <p class="text-xs text-slate-600 mt-1">Datos y antecedentes del problema.</p>
+                </div>
+                <div class="bg-red-50 p-6 rounded-xl border-l-4 border-red-500">
+                    <strong class="text-2xl block text-red-500 mb-1">R</strong>
+                    <span class="font-bold text-slate-800 block">RESTRICCIONES</span>
+                    <p class="text-xs text-slate-600 mt-1">Límites (Ej: No inventar, ser breve).</p>
+                </div>
+                <div class="bg-lime-50 p-6 rounded-xl border-l-4 border-ean-lime">
+                    <strong class="text-2xl block text-green-700 mb-1">K</strong>
+                    <span class="font-bold text-slate-800 block">KPI / SALIDA</span>
+                    <p class="text-xs text-slate-600 mt-1">Formato (Ej: Tabla, Lista, Email).</p>
+                </div>
+            </div>
+        </section>
 
-            <section id="glossary">
+        <section id="verificacion">
+            <span class="chapter-badge">Capítulo 03</span>
+            <h2 class="text-3xl font-bold text-ean-blue mb-4">Verificación y Reducción de Alucinaciones</h2>
+            <p class="text-slate-700 text-lg mb-8 max-w-3xl">Protocolo de seguridad: "Confía, pero verifica". Nunca use la primera respuesta para una decisión crítica.</p>
+            
+            <div class="bg-white p-8 rounded-xl border border-gray-200 shadow-sm flex flex-col md:flex-row gap-8">
+                <div class="flex-1">
+                    <h4 class="font-bold text-slate-800 flex items-center gap-2 mb-2"><i class="fas fa-link text-ean-blue"></i> Chain of Thought</h4>
+                    <p class="text-sm text-slate-600 mb-4">Pida a la IA: <em>"Piensa paso a paso y explica tu lógica antes de dar el resultado final."</em></p>
+                </div>
+                <div class="flex-1 border-l pl-8 border-gray-200">
+                    <h4 class="font-bold text-slate-800 flex items-center gap-2 mb-2"><i class="fas fa-user-secret text-red-500"></i> El Rol del Crítico</h4>
+                    <p class="text-sm text-slate-600 mb-4">Pida a la IA: <em>"Actúa como un auditor escéptico. Encuentra 3 errores en tu respuesta anterior."</em></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="patrones" class="bg-white">
+            <span class="chapter-badge">Capítulo 04</span>
+            <h2 class="text-3xl font-bold text-ean-blue mb-4">Patrones de Uso Gerencial</h2>
+            <p class="text-slate-700 mb-8">Identifique su necesidad para elegir la herramienta correcta:</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div class="p-4 border border-gray-200 rounded-lg hover:bg-blue-50 transition">
+                    <i class="fas fa-chart-pie text-2xl text-blue-600 mb-2"></i>
+                    <h4 class="font-bold text-slate-800">Análisis</h4>
+                </div>
+                <div class="p-4 border border-gray-200 rounded-lg hover:bg-green-50 transition">
+                    <i class="fas fa-filter text-2xl text-green-600 mb-2"></i>
+                    <h4 class="font-bold text-slate-800">Síntesis</h4>
+                </div>
+                <div class="p-4 border border-gray-200 rounded-lg hover:bg-purple-50 transition">
+                    <i class="fas fa-chess text-2xl text-purple-600 mb-2"></i>
+                    <h4 class="font-bold text-slate-800">Planificación</h4>
+                </div>
+                <div class="p-4 border border-gray-200 rounded-lg hover:bg-orange-50 transition">
+                    <i class="fas fa-bullhorn text-2xl text-orange-600 mb-2"></i>
+                    <h4 class="font-bold text-slate-800">Comunicación</h4>
+                </div>
+            </div>
+        </section>
+
+        <section id="lab">
+            <div class="mb-8">
+                <span class="chapter-badge">Capítulo 05</span>
+                <h2 class="text-3xl font-bold text-ean-blue">Laboratorio de Práctica (20 Casos)</h2>
+                <p class="text-slate-700">Seleccione un caso real. Copie el prompt maestro. Ejecútelo en su IA.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-1 space-y-6">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Biblioteca de Casos:</label>
+                        <select id="caseSelector" class="w-full p-4 bg-white border border-gray-300 rounded-xl shadow-sm outline-none focus:ring-2 focus:ring-ean-blue font-bold text-slate-700 text-sm cursor-pointer">
+                            </select>
+                    </div>
+
+                    <div class="bg-blue-50 p-6 rounded-xl border border-blue-100">
+                        <h4 class="font-bold text-blue-900 text-xs uppercase mb-3">Resumen Técnico:</h4>
+                        <div id="promptTags" class="flex flex-col gap-2">
+                            </div>
+                    </div>
+
+                    <button onclick="copyPromptText()" class="w-full bg-ean-blue text-white font-bold py-4 rounded-xl shadow-lg hover:bg-black transition flex items-center justify-center gap-2">
+                        <i class="far fa-copy"></i> COPIAR PROMPT
+                    </button>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <div class="terminal-window rounded-2xl overflow-hidden flex flex-col h-[600px]">
+                        <div class="bg-slate-900 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
+                            <div class="flex gap-1.5"><span class="w-3 h-3 rounded-full bg-red-500"></span><span class="w-3 h-3 rounded-full bg-yellow-500"></span><span class="w-3 h-3 rounded-full bg-green-500"></span></div>
+                            <span class="text-[10px] font-mono text-slate-500 tracking-widest uppercase">Ean_Prompt_Console_v11.0</span>
+                        </div>
+                        <div id="caseOutput" class="p-8 font-mono text-sm leading-relaxed overflow-y-auto h-full text-slate-300 scroll-smooth">
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="monitor" class="bg-white">
+            <span class="chapter-badge">Capítulo 06</span>
+            <h2 class="text-3xl font-bold text-ean-blue mb-6">Monitor de Herramientas</h2>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <table class="w-full text-left">
+                    <thead class="bg-gray-50 border-b border-gray-200 text-[10px] uppercase text-slate-500 font-black">
+                        <tr>
+                            <th class="p-4">Plataforma</th>
+                            <th class="p-4">Categoría</th>
+                            <th class="p-4">Uso Gerencial</th>
+                            <th class="p-4 text-center">Enlace</th>
+                        </tr>
+                    </thead>
+                    <tbody id="toolTable" class="text-xs divide-y divide-gray-100 text-slate-700">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="actividad" class="pb-24">
+            <div class="bg-white rounded-[40px] p-12 border-2 border-gray-100 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-ean-blue to-ean-lime"></div>
+                
                 <div class="text-center mb-10">
-                    <h2 class="text-3xl font-bold text-gray-900">Ingeniería de Instrucciones</h2>
-                    <p class="text-gray-500 mt-2">Los bloques de construcción para hablar con la máquina.</p>
+                    <span class="chapter-badge">Capítulo 07</span>
+                    <h2 class="text-4xl font-extrabold text-slate-900 mb-4">Simulador de Crisis Ejecutiva</h2>
+                    <p class="text-slate-600 max-w-2xl mx-auto text-lg">
+                        <strong>Instrucciones:</strong> Elija un escenario. Piense su estrategia. Revele la solución experta.
+                    </p>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                        <div class="flex items-center gap-3 mb-4 border-b pb-2">
-                            <div class="bg-blue-100 p-2 rounded text-ean-blue"><i class="fas fa-user-tie"></i></div>
-                            <h3 class="font-bold text-gray-800">1. Actores (Roles Expertos)</h3>
+                <div class="max-w-4xl mx-auto mb-8 bg-slate-50 p-6 rounded-2xl border border-gray-200">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Seleccionar Escenario:</label>
+                            <select id="simSelector" class="w-full p-3 bg-white border border-gray-300 rounded-lg font-bold text-slate-700 text-sm outline-none focus:ring-2 focus:ring-ean-lime cursor-pointer">
+                                </select>
                         </div>
-                        <p class="text-xs text-gray-500 mb-4">Copie estos roles para definir la "personalidad" de la IA:</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="badge bg-blue-50 text-blue-700 px-2 py-1 rounded border border-blue-100 text-xs font-mono cursor-pointer hover:bg-blue-100">CFO (Financiero)</span>
-                            <span class="badge bg-blue-50 text-blue-700 px-2 py-1 rounded border border-blue-100 text-xs font-mono cursor-pointer hover:bg-blue-100">Abogado Senior</span>
-                            <span class="badge bg-blue-50 text-blue-700 px-2 py-1 rounded border border-blue-100 text-xs font-mono cursor-pointer hover:bg-blue-100">Auditor ISO</span>
-                            <span class="badge bg-blue-50 text-blue-700 px-2 py-1 rounded border border-blue-100 text-xs font-mono cursor-pointer hover:bg-blue-100">Headhunter IT</span>
-                            <span class="badge bg-blue-50 text-blue-700 px-2 py-1 rounded border border-blue-100 text-xs font-mono cursor-pointer hover:bg-blue-100">Growth Hacker</span>
-                            <span class="badge bg-blue-50 text-blue-700 px-2 py-1 rounded border border-blue-100 text-xs font-mono cursor-pointer hover:bg-blue-100">Supply Chain Manager</span>
-                        </div>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                        <div class="flex items-center gap-3 mb-4 border-b pb-2">
-                            <div class="bg-lime-100 p-2 rounded text-lime-700"><i class="fas fa-check-double"></i></div>
-                            <h3 class="font-bold text-gray-800">2. Verbos de Acción (Tareas)</h3>
-                        </div>
-                        <p class="text-xs text-gray-500 mb-4">No diga "hazme algo". Sea específico:</p>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <span class="text-[10px] uppercase font-bold text-gray-400">Analíticos</span>
-                                <ul class="text-xs text-gray-600 mt-1 space-y-1">
-                                    <li>• Audita (Busca errores)</li>
-                                    <li>• Clasifica (Ordena data)</li>
-                                    <li>• Diagnostica (Busca causa raíz)</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <span class="text-[10px] uppercase font-bold text-gray-400">Generativos</span>
-                                <ul class="text-xs text-gray-600 mt-1 space-y-1">
-                                    <li>• Redacta (Crea texto)</li>
-                                    <li>• Ideate (Lluvia de ideas)</li>
-                                    <li>• Traduce (Cambia idioma/tono)</li>
-                                </ul>
-                            </div>
+                        <div>
+                            <button onclick="randomScenario()" class="w-full py-3 bg-white border border-gray-300 text-slate-600 font-bold rounded-lg hover:bg-gray-100 transition uppercase text-xs shadow-sm">
+                                <i class="fas fa-random mr-2"></i> Aleatorio
+                            </button>
                         </div>
                     </div>
                 </div>
-            </section>
 
-            <section id="monitor">
-                <div class="flex flex-col md:flex-row justify-between items-end mb-6 gap-4">
-                    <div>
-                        <h2 class="text-3xl font-bold text-gray-900">Monitor de Inteligencia Artificial</h2>
-                        <p class="text-gray-500">Base de datos dinámica. Escaneando nuevas soluciones...</p>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <div class="text-right">
-                            <p class="text-xs text-gray-400 uppercase">Herramientas</p>
-                            <p id="counter" class="text-2xl font-bold text-ean-blue">Cargando...</p>
+                <div class="max-w-4xl mx-auto mb-10 text-center">
+                     <p id="simText" class="text-2xl text-slate-800 font-serif italic leading-relaxed px-4">"..."</p>
+                </div>
+
+                <div class="text-center mb-12">
+                    <button onclick="revealSimSolution()" class="px-10 py-4 bg-ean-blue text-white font-bold rounded-full hover:bg-blue-800 transition shadow-xl uppercase text-xs tracking-widest transform hover:scale-105">
+                        <i class="fas fa-eye mr-2"></i> Revelar Estrategia Experta
+                    </button>
+                </div>
+
+                <div id="simSolution" class="hidden text-left max-w-4xl mx-auto bg-green-50 border border-green-200 p-8 rounded-3xl animate-fade-in-up shadow-inner">
+                    <h4 class="text-green-800 font-black uppercase text-[10px] tracking-widest mb-6 border-b border-green-200 pb-2">Plan Recomendado:</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <div class="md:col-span-1">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Herramienta</span>
+                            <div class="font-bold text-ean-blue text-lg leading-tight" id="simToolDisplay">...</div>
                         </div>
-                        <button onclick="forceScan()" class="bg-ean-blue hover:bg-blue-800 text-white px-4 py-2 rounded-lg text-sm transition shadow-lg">
-                            <i class="fas fa-sync-alt mr-2"></i> Actualizar
-                        </button>
-                    </div>
-                </div>
-
-                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 sticky top-20 z-30 mb-4">
-                    <div class="flex gap-4">
-                        <input type="text" id="search" placeholder="Buscar (Ej: GPT, Excel, Legal)..." class="w-full border-gray-300 rounded-md shadow-sm focus:border-ean-blue focus:ring focus:ring-ean-blue focus:ring-opacity-50 p-2 border">
-                        <select id="catFilter" class="border-gray-300 rounded-md shadow-sm focus:border-ean-blue p-2 border bg-gray-50">
-                            <option value="">Todas las Áreas</option>
-                            <option value="General">General / LLM</option>
-                            <option value="Logística">Logística</option>
-                            <option value="RRHH">Talento Humano</option>
-                            <option value="Dev">Desarrollo</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
-                    <table class="w-full text-left">
-                        <thead class="bg-gray-50 border-b border-gray-200 text-xs uppercase text-gray-500 font-bold">
-                            <tr>
-                                <th class="p-5">Herramienta</th>
-                                <th class="p-5">Tipo</th>
-                                <th class="p-5">Aplicación Gerencial (Use Case)</th>
-                                <th class="p-5">Versión</th>
-                                <th class="p-5 text-center">Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody id="aiTable" class="text-sm divide-y divide-gray-100">
-                            </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <section id="prompt-lab">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div class="lg:col-span-1 bg-white p-6 rounded-xl border border-gray-200 shadow-sm h-fit">
-                        <h3 class="text-xl font-bold text-gray-900 mb-4">Laboratorio de Prompts</h3>
-                        <p class="text-sm text-gray-500 mb-6">Seleccione un escenario común en la Alta Dirección para ver la estructura óptima.</p>
-                        
-                        <label class="text-xs font-bold text-gray-700 uppercase mb-2 block">Escenario:</label>
-                        <select id="promptSelector" class="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg mb-6 outline-none focus:ring-2 focus:ring-ean-lime">
-                            </select>
-
-                        <div class="space-y-3">
-                            <div class="p-3 bg-blue-50 border-l-4 border-blue-500 rounded text-xs">
-                                <strong>Rol:</strong> Define la autoridad.
-                            </div>
-                            <div class="p-3 bg-purple-50 border-l-4 border-purple-500 rounded text-xs">
-                                <strong>Contexto:</strong> Datos necesarios.
-                            </div>
-                            <div class="p-3 bg-green-50 border-l-4 border-green-500 rounded text-xs">
-                                <strong>Tarea:</strong> Acción específica.
-                            </div>
-                            <div class="p-3 bg-orange-50 border-l-4 border-orange-500 rounded text-xs">
-                                <strong>Formato:</strong> Cómo se entrega.
-                            </div>
+                        <div class="md:col-span-3">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Prompt Maestro</span>
+                            <div class="text-sm text-slate-700 bg-white p-6 rounded-2xl border border-green-100 italic shadow-sm leading-relaxed font-mono" id="simPromptDisplay">...</div>
                         </div>
-
-                        <button onclick="copyPrompt()" class="w-full mt-6 bg-gray-800 text-white py-3 rounded-lg font-bold hover:bg-black transition flex items-center justify-center gap-2">
-                            <i class="far fa-copy"></i> Copiar al Portapapeles
-                        </button>
-                    </div>
-
-                    <div class="lg:col-span-2 bg-gray-900 rounded-xl shadow-2xl overflow-hidden flex flex-col min-h-[500px]">
-                        <div class="bg-black px-4 py-2 flex items-center gap-2 border-b border-gray-800">
-                            <div class="flex gap-1.5">
-                                <span class="w-3 h-3 rounded-full bg-red-500"></span>
-                                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                                <span class="w-3 h-3 rounded-full bg-green-500"></span>
-                            </div>
-                            <span class="ml-4 text-xs font-mono text-gray-500">prompt_engineer_console.sh</span>
-                        </div>
-                        <div id="promptOutput" class="p-8 font-mono text-sm leading-relaxed text-gray-300 overflow-y-auto flex-grow">
-                            </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <section id="automations" class="pb-12">
-                <h2 class="text-3xl font-bold text-gray-900 mb-8">Ecosistema de Automatización</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="group bg-white rounded-xl border border-gray-200 p-6 hover:shadow-xl transition hover:-translate-y-1">
-                        <div class="w-14 h-14 bg-purple-600 rounded-lg flex items-center justify-center text-white text-2xl font-bold mb-4 shadow-lg shadow-purple-200">M</div>
-                        <h3 class="font-bold text-lg mb-2">Make (Integromat)</h3>
-                        <p class="text-sm text-gray-500 mb-6">El "pegamento" de internet. Conecte Gmail, Trello y Excel visualmente.</p>
-                        <a href="https://www.make.com" target="_blank" class="text-purple-600 font-bold text-sm group-hover:underline">Ver Tutorial <i class="fas fa-arrow-right ml-1"></i></a>
-                    </div>
-                    
-                    <div class="group bg-white rounded-xl border border-gray-200 p-6 hover:shadow-xl transition hover:-translate-y-1">
-                        <div class="w-14 h-14 bg-pink-500 rounded-lg flex items-center justify-center text-white text-2xl font-bold mb-4 shadow-lg shadow-pink-200">n</div>
-                        <h3 class="font-bold text-lg mb-2">n8n Workflow</h3>
-                        <p class="text-sm text-gray-500 mb-6">Automatización potente y privada. Ideal para datos sensibles de la empresa.</p>
-                        <a href="https://n8n.io" target="_blank" class="text-pink-600 font-bold text-sm group-hover:underline">Documentación Técnica <i class="fas fa-arrow-right ml-1"></i></a>
-                    </div>
-
-                    <div class="group bg-white rounded-xl border border-gray-200 p-6 hover:shadow-xl transition hover:-translate-y-1">
-                        <div class="w-14 h-14 bg-blue-600 rounded-lg flex items-center justify-center text-white text-2xl font-bold mb-4 shadow-lg shadow-blue-200">L</div>
-                        <h3 class="font-bold text-lg mb-2">Lovable AI</h3>
-                        <p class="text-sm text-gray-500 mb-6">De texto a software. Cree dashboards gerenciales describiéndolos en el chat.</p>
-                        <a href="https://lovable.dev" target="_blank" class="text-blue-600 font-bold text-sm group-hover:underline">Probar Beta <i class="fas fa-arrow-right ml-1"></i></a>
-                    </div>
-                </div>
-            </section>
-
-        </div>
     </main>
 
-    <footer class="bg-ean-dark text-gray-400 py-12 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="text-center md:text-left">
-                <img src="https://universidadean.edu.co/sites/default/files/logo-horizontal-es.png" alt="Ean" class="h-6 opacity-50 brightness-0 invert mx-auto md:mx-0 mb-2">
-                <p class="text-xs">Diplomado en Inteligencia Artificial para la Alta Dirección</p>
-            </div>
-            <div class="text-xs">
-                Desarrollado con fines académicos por <span class="text-ean-lime font-bold">Juan Sebastian Masmela</span> &copy; 2026
-            </div>
+    <footer class="bg-black py-20 text-center border-t border-gray-800 text-gray-500">
+        <div class="max-w-4xl mx-auto px-4">
+            <img src="https://universidadean.edu.co/sites/default/files/logo-horizontal-es.png" alt="Ean" class="h-6 mx-auto mb-6 opacity-30 grayscale brightness-0 invert">
+            <p class="text-[10px] uppercase tracking-widest">Diplomado en Inteligencia Artificial para la Alta Dirección</p>
+            <p class="text-[10px] mt-2">Universidad Ean &copy; 2026</p>
         </div>
     </footer>
 
     <script>
-        // --- 1. BASE DE DATOS (CON CHATGPT Y GEMINI INCLUIDOS) ---
-        const initialTools = [
-            { n: "ChatGPT Enterprise", cat: "General", use: "Asistente Estratégico y Análisis de Datos", ver: "GPT-4o", status: "Online" },
-            { n: "Gemini Advanced", cat: "General", use: "Multimodal (Video, Audio) y Docs Largos", ver: "1.5 Pro", status: "Online" },
-            { n: "DeepSeek R1", cat: "Dev", use: "Razonamiento Lógico Económico", ver: "R1", status: "New" },
-            { n: "Microsoft Copilot", cat: "General", use: "Integración Office 365 y Excel", ver: "Pro", status: "Online" },
-            { n: "Make", cat: "Dev", use: "Automatización de Procesos Visual", ver: "SaaS", status: "Online" },
-            { n: "Route4Me", cat: "Logística", use: "Optimización de Rutas Última Milla", ver: "Ent", status: "Online" },
-            { n: "Paradox", cat: "RRHH", use: "Reclutamiento Automático (Olivia)", ver: "AI", status: "Online" },
-            { n: "Midjourney", cat: "General", use: "Generación de Activos Visuales", ver: "v6", status: "Online" },
-            { n: "Claude 3.5", cat: "General", use: "Análisis Legal y Escritura Humana", ver: "Sonnet", status: "Online" }
+        // --- 1. DATA: 20 CASOS (LABORATORIO) ---
+        const caseDB = [
+            { t: "1. Reporte Financiero (Análisis)", r: "CFO Senior", c: "Resultados Q4 muestran caída del 10% en ingresos logísticos.", k: "Detecta 3 causas raíz y propón plan de choque.", f: "Reporte Ejecutivo + Tabla de Variaciones." },
+            { t: "2. Plan Estratégico 2026 (Planificación)", r: "Consultor McKinsey", c: "Empresa de Retail enfrentando competencia china.", k: "Define 3 pilares de diferenciación anual.", f: "Matriz Estratégica." },
+            { t: "3. Política de Uso IA (Políticas)", r: "Compliance Officer", c: "Empleados usando ChatGPT con datos sensibles.", k: "Redacta directrices de privacidad y ética.", f: "Documento Normativo Corporativo." },
+            { t: "4. Evaluación Comparativa Competencia (Evaluación)", r: "Analista de Mercado", c: "Nuestra App vs Nubank y Ualá.", k: "Compara funcionalidades, UX y costos.", f: "Matriz Comparativa (Puntaje 1-5)." },
+            { t: "5. Auditoría de Contratos (Reporte)", r: "Abogado Tech", c: "Contrato SaaS de 50 páginas.", k: "Identifica penalizaciones ocultas por salida.", f: "Resumen de Riesgos Legales." },
+            { t: "6. Plan de Retención de Talento (Planificación)", r: "Director RRHH", c: "Rotación del 30% en equipos Tech.", k: "Crea plan de beneficios no salariales.", f: "Estructura de Programa." },
+            { t: "7. Gestión de Crisis PR (Comunicación)", r: "Dir. Comunicaciones", c: "Queja viral en Twitter sobre racismo.", k: "Redacta comunicado asumiendo responsabilidad.", f: "Borrador de Prensa." },
+            { t: "8. Optimización Inventarios (Planificación)", r: "Supply Chain Manager", c: "Sobrestock en bodega de perecederos.", k: "Estrategia de evacuación en 48h.", f: "Checklist Operativo." },
+            { t: "9. Feedback Constructivo (Comunicación)", r: "Coach Ejecutivo", c: "Gerente brillante pero conflictivo.", k: "Guion de feedback método sandwich.", f: "Guion Paso a Paso." },
+            { t: "10. Generación Leads B2B (Planificación)", r: "Growth Hacker", c: "Consultora de Ciberseguridad.", k: "10 ideas de Lead Magnets.", f: "Lista Priorizada por Esfuerzo." },
+            { t: "11. Agenda Eficiente (Políticas)", r: "Estratega Tiempo", c: "Reuniones de 3 horas improductivas.", k: "Crea política de reuniones de 45 min.", f: "Agenda Minuto a Minuto." },
+            { t: "12. Análisis de Datos Ventas (Reporte)", r: "Data Scientist", c: "Excel de ventas sucio (texto plano).", k: "Identifica patrón de caída por región.", f: "Resumen de Insights." },
+            { t: "13. Lanzamiento Producto (Planificación)", r: "Product Owner", c: "Nuevo CRM para PyMes.", k: "Roadmap de lanzamiento a 90 días.", f: "Gantt Textual." },
+            { t: "14. Discurso Fusión (Comunicación)", r: "Speechwriter", c: "Fusión con competidor.", k: "Mensaje de calma a empleados.", f: "Discurso 3 minutos." },
+            { t: "15. Perfil LinkedIn CEO (Evaluación)", r: "Personal Bander", c: "Perfil actual vs líderes del sector.", k: "Optimiza bio para atraer inversión.", f: "Bio Profesional." },
+            { t: "16. Plan Sostenibilidad (Planificación)", r: "Consultor ESG", c: "Meta: Reducir huella carbono 20%.", k: "5 iniciativas de economía circular.", f: "Plan de Acción." },
+            { t: "17. Onboarding Remoto (Políticas)", r: "Dir. Talento", c: "Nuevos empleados 100% remotos.", k: "Manual de bienvenida y cultura.", f: "Checklist de 30 días." },
+            { t: "18. Customer Success (Evaluación)", r: "CS Manager", c: "Cliente clave quiere cancelar.", k: "Evalúa su historial y propón oferta.", f: "Email de Retención." },
+            { t: "19. Ciberseguridad (Políticas)", r: "CISO", c: "Ataque Phishing exitoso.", k: "Protocolo de respuesta a incidentes.", f: "Comunicado de Alerta." },
+            { t: "20. Sucesión Gerencial (Planificación)", r: "Board Member", c: "CEO se retira en 6 meses.", k: "Ruta de transición y perfil sucesor.", f: "Mapa de Ruta." }
         ];
 
-        // Cola de simulación (se irán agregando)
-        const incomingStream = [
-            { n: "Samsara", cat: "Logística", use: "IoT Flota Segura", ver: "Cloud", status: "New" },
-            { n: "Workday AI", cat: "RRHH", use: "Predicción de Fuga de Talento", ver: "HCM", status: "New" },
-            { n: "Lovable", cat: "Dev", use: "Generación de Software No-Code", ver: "Beta", status: "New" },
-            { n: "Perplexity", cat: "General", use: "Búsqueda con Fuentes Reales", ver: "Pro", status: "New" },
-            { n: "Jasper", cat: "General", use: "Copywriting Corporativo", ver: "Ent", status: "New" }
+        // --- 2. DATA: HERRAMIENTAS ---
+        const toolDB = [
+            { n: "ChatGPT", c: "Texto", u: "Estrategia General", l: "https://chat.openai.com" },
+            { n: "Gemini", c: "Docs", u: "Análisis de PDFs", l: "https://gemini.google.com" },
+            { n: "Claude 3.5", c: "Legal", u: "Redacción Humana", l: "https://claude.ai" },
+            { n: "Perplexity", c: "Research", u: "Búsqueda con Fuentes", l: "https://perplexity.ai" },
+            { n: "Midjourney", c: "Imagen", u: "Marketing Visual", l: "https://midjourney.com" },
+            { n: "Runway", c: "Video", u: "Clips Comerciales", l: "https://runwayml.com" },
+            { n: "Suno", c: "Audio", u: "Música Corporativa", l: "https://suno.com" },
+            { n: "ElevenLabs", c: "Voz", u: "Doblaje / Clonación", l: "https://elevenlabs.io" },
+            { n: "Gamma", c: "PPT", u: "Presentaciones", l: "https://gamma.app" },
+            { n: "Make", c: "Auto", u: "Flujos de Trabajo", l: "https://make.com" }
         ];
 
-        let displayTools = [...initialTools];
-        let streamIndex = 0;
+        // --- 3. DATA: ESCENARIOS SIMULADOR ---
+        const scenarios = [
+            { t: "Fuga de Datos Confidenciales: Un empleado subió la base de clientes a una IA pública.", h: "Claude 3.5 (Legal) + ChatGPT (PR)", s: "Actúa como Crisis Manager. Evalúa impacto legal (GDPR) y redacta comunicado transparente a clientes afectados." },
+            { t: "Caída de Servidores en Black Friday: La web no responde y se pierden ventas por minuto.", h: "Gemini (Status) + ChatGPT (Soporte)", s: "Actúa como CTO. Genera reporte técnico simplificado para la junta y scripts de disculpa para atención al cliente." },
+            { t: "Competencia Lanza Producto a Mitad de Precio: Guerra de precios inminente.", h: "ChatGPT (Estrategia) + Perplexity (Market)", s: "Actúa como CMO. Analiza debilidades del producto barato y crea campaña centrada en 'Valor y Garantía'." },
+            { t: "Huelga de Transportadores: Materia prima bloqueada en puerto.", h: "ChatGPT (Logística)", s: "Actúa como Supply Chain Lead. Diseña rutas alternas terrestres y plan de contingencia de inventario mínimo." },
+            { t: "Rumor Falso de Venta de la Empresa: El talento clave está renunciando por miedo.", h: "Claude (Comms Interna)", s: "Actúa como CEO. Redacta mensaje de video/texto de tranquilidad a empleados desmintiendo el rumor categóricamente." }
+        ];
 
-        // --- 2. RENDERIZADO DE TABLA ---
-        const tableBody = document.getElementById('aiTable');
-        const counterEl = document.getElementById('counter');
+        // --- LOGIC: LABORATORIO ---
+        const caseSel = document.getElementById('caseSelector');
+        const caseOut = document.getElementById('caseOutput');
+        const tagsDiv = document.getElementById('promptTags');
 
-        function renderTable(data) {
-            tableBody.innerHTML = "";
-            counterEl.innerText = data.length;
-
-            data.forEach(t => {
-                const row = document.createElement('tr');
-                row.className = `hover:bg-gray-50 transition-all border-b border-gray-50 ${t.isNewAnimation ? 'new-row' : ''}`;
-                
-                let badgeColor = "bg-gray-100 text-gray-600";
-                if(t.cat === "Logística") badgeColor = "bg-orange-100 text-orange-700";
-                if(t.cat === "RRHH") badgeColor = "bg-pink-100 text-pink-700";
-                if(t.cat === "Dev") badgeColor = "bg-purple-100 text-purple-700";
-                if(t.cat === "General") badgeColor = "bg-blue-100 text-blue-700";
-
-                let statusDot = t.status === "New" ? 
-                    `<span class="flex items-center justify-center gap-1 text-xs font-bold text-green-600"><span class="h-2 w-2 rounded-full bg-green-500 animate-pulse"></span> Nuevo</span>` : 
-                    `<span class="flex items-center justify-center gap-1 text-xs text-gray-400"><span class="h-2 w-2 rounded-full bg-gray-300"></span> Online</span>`;
-
-                row.innerHTML = `
-                    <td class="p-5 font-bold text-gray-800 flex items-center gap-3">
-                        ${t.n}
-                    </td>
-                    <td class="p-5"><span class="px-2 py-1 rounded text-[10px] uppercase font-bold ${badgeColor}">${t.cat}</span></td>
-                    <td class="p-5 text-gray-600">${t.use}</td>
-                    <td class="p-5 font-mono text-xs text-ean-blue">${t.ver}</td>
-                    <td class="p-5 text-center">${statusDot}</td>
-                `;
-                tableBody.appendChild(row);
-            });
+        function initLab() {
+            caseSel.innerHTML = caseDB.map((c, i) => `<option value="${i}">${c.t}</option>`).join('');
+            updateCase(0);
         }
 
-        // --- 3. LÓGICA DE ESCANEO SIMULADO ---
-        function scanNetwork() {
-            if(streamIndex < incomingStream.length) {
-                const newItem = incomingStream[streamIndex];
-                newItem.isNewAnimation = true; // Trigger CSS animation
-                
-                // Insertar al inicio (después de los fijos si quisieramos, pero al inicio se ve mejor el efecto)
-                // O mejor, insertamos en la posición 3 para no mover a ChatGPT/Gemini del tope
-                displayTools.splice(2, 0, newItem); 
-                
-                renderTable(displayTools);
-                
-                // Toast Notification
-                const toast = document.getElementById('scanner-toast');
-                const text = document.getElementById('scanner-text');
-                text.innerText = `Detectado: ${newItem.n}`;
-                toast.classList.remove('translate-y-32');
-                setTimeout(() => toast.classList.add('translate-y-32'), 3000);
-
-                streamIndex++;
-            }
-        }
-
-        // Intervalo de escaneo (Cada 6 segundos)
-        setInterval(scanNetwork, 6000);
-
-        // Filtros
-        document.getElementById('search').addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            const filtered = displayTools.filter(t => t.n.toLowerCase().includes(term) || t.use.toLowerCase().includes(term));
-            renderTable(filtered);
-        });
-
-        document.getElementById('catFilter').addEventListener('change', (e) => {
-            const cat = e.target.value;
-            const filtered = displayTools.filter(t => cat === "" || t.cat === cat);
-            renderTable(filtered);
-        });
-
-        // --- 4. PROMPT LAB DATA (15 EJEMPLOS) ---
-        const prompts = [
-            { t: "Mejora de CV Ejecutivo", r: "Headhunter Senior IT", c: "Perfil con 15 años de experiencia desordenado.", k: "Reestructura enfocando en logros cuantificables (%, $). Elimina tareas operativas.", f: "Markdown limpio." },
-            { t: "Auditoría de Procesos", r: "Auditor ISO 9001", c: "Proceso de compras manual vía email.", k: "Identifica 3 riesgos críticos y diagrama un flujo seguro.", f: "Tabla Riesgos vs Control." },
-            { t: "Plan Estratégico 2026", r: "Director de Estrategia", c: "Retail tradicional vs Competencia China.", k: "Define 3 pilares de diferenciación digital.", f: "Matriz Objetivos + KPIs." },
-            { t: "Gestión de Crisis", r: "Gerente de RRPP", c: "Cliente queja viral en LinkedIn.", k: "Redacta respuesta empática pública llevando al privado.", f: "Texto corto profesional." },
-            { t: "Análisis Legal Contrato", r: "Abogado Corporativo", c: "Cláusula de permanencia software SaaS.", k: "Explica riesgos financieros en lenguaje sencillo.", f: "Lista de viñetas." },
-            { t: "KPIs Logística", r: "Gerente Supply Chain", c: "Altas devoluciones en última milla.", k: "Propón 5 KPIs para medir calidad de entrega.", f: "Tabla con fórmulas." },
-            { t: "Feedback a Empleado", r: "Coach Ejecutivo", c: "Empleado talentoso pero conflictivo.", k: "Guion de feedback usando método Sandwich.", f: "Diálogo paso a paso." },
-            { t: "Generación Leads B2B", r: "Growth Hacker", c: "Consultora de Software.", k: "10 ideas de Lead Magnets para atraer CTOs.", f: "Lista priorizada." },
-            { t: "Resumen de Datos", r: "Data Scientist", c: "Reporte de ventas trimestral complejo.", k: "Extrae la tendencia principal y una anomalía.", f: "Resumen Ejecutivo." },
-            { t: "Lluvia de Ideas Innovación", r: "Consultor Design Thinking", c: "Banco queriendo atraer Gen Z.", k: "5 productos financieros disruptivos.", f: "Conceptos con nombre creativo." },
-            { t: "Negociación Proveedor", r: "Negociador FBI", c: "Subida de precios injustificada.", k: "Correo rechazando subida sin romper relación.", f: "Email táctico." },
-            { t: "Descripción de Cargo", r: "Gerente RRHH", c: "Vacante Prompt Engineer.", k: "Perfil, responsabilidades y rango salarial.", f: "Plantilla Oferta." },
-            { t: "Análisis Competencia", r: "Analista de Mercado", c: "Venta de Café Especial.", k: "Debilidades de Starbucks en canal digital.", f: "Análisis FODA parcial." },
-            { t: "Definición OKRs", r: "Agile Coach", c: "Equipo de Marketing.", k: "1 Objetivo Anual y 3 Key Results trimestrales.", f: "Formato OKR." },
-            { t: "Agenda Reunión Eficiente", r: "Experto en Productividad", c: "Reunión de 3 horas sin agenda.", k: "Estructura bloques de tiempo para lograrlo en 45 min.", f: "Agenda minuto a minuto." }
-        ];
-
-        const promptSelector = document.getElementById('promptSelector');
-        const promptOutput = document.getElementById('promptOutput');
-
-        // Llenar select
-        prompts.forEach((p, i) => {
-            const opt = document.createElement('option');
-            opt.value = i;
-            opt.innerText = `${i+1}. ${p.t}`;
-            promptSelector.appendChild(opt);
-        });
-
-        function renderPrompt(idx) {
-            const p = prompts[idx];
-            promptOutput.innerHTML = `
-                <div class="mb-6 border-b border-gray-800 pb-4">
-                    <span class="text-gray-500 text-xs uppercase tracking-widest">// Objetivo</span><br>
-                    <span class="text-white font-bold text-lg">${p.t}</span>
-                </div>
-                
-                <div class="grid gap-6">
-                    <div>
-                        <span class="text-blue-400 font-bold text-xs uppercase bg-blue-900/30 px-2 py-1 rounded">ROLE (Actúa como)</span>
-                        <div class="mt-2 text-green-400 font-mono">"${p.r}"</div>
+        function updateCase(idx) {
+            const c = caseDB[idx];
+            // Tags Metadata
+            tagsDiv.innerHTML = `
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center border-b border-blue-200 pb-1">
+                        <span class="text-[10px] font-bold uppercase text-blue-500">Rol Experto:</span>
+                        <span class="text-xs font-bold text-blue-900">${c.r}</span>
                     </div>
-
-                    <div>
-                        <span class="text-purple-400 font-bold text-xs uppercase bg-purple-900/30 px-2 py-1 rounded">CONTEXT (La situación)</span>
-                        <div class="mt-2 text-gray-300 font-mono text-sm border-l-2 border-gray-700 pl-3">
-                            ${p.c}
-                        </div>
-                    </div>
-
-                    <div>
-                        <span class="text-green-500 font-bold text-xs uppercase bg-green-900/30 px-2 py-1 rounded">TASK (La instrucción)</span>
-                        <div class="mt-2 text-white font-bold font-mono text-sm bg-gray-800 p-3 rounded border border-gray-700">
-                            ${p.k}
-                        </div>
-                    </div>
-
-                    <div>
-                        <span class="text-orange-400 font-bold text-xs uppercase bg-orange-900/30 px-2 py-1 rounded">FORMAT (Entrega)</span>
-                        <div class="mt-2 text-gray-400 font-mono text-xs">
-                            >> ${p.f}
-                        </div>
+                    <div class="flex justify-between items-center border-b border-blue-200 pb-1">
+                        <span class="text-[10px] font-bold uppercase text-blue-500">Formato:</span>
+                        <span class="text-xs font-bold text-blue-900">${c.f}</span>
                     </div>
                 </div>
             `;
+            // Console Output
+            caseOut.innerHTML = `
+<div class="mb-6 text-gray-500 text-xs tracking-widest">// INICIO DEL PROMPT v9.0</div>
+
+<div class="mb-6">
+    <span class="text-blue-400 font-bold tracking-widest text-xs uppercase block mb-1"># 1. ROL (ACTÚA COMO):</span>
+    <span class="text-white text-lg font-medium">"${c.r} con 20 años de experiencia ejecutiva."</span>
+</div>
+
+<div class="mb-6">
+    <span class="text-purple-400 font-bold tracking-widest text-xs uppercase block mb-1"># 2. CONTEXTO:</span>
+    <span class="text-slate-300 italic">"${c.c}"</span>
+</div>
+
+<div class="mb-6 bg-slate-800 p-6 rounded-xl border-l-4 border-ean-lime">
+    <span class="text-ean-lime font-bold tracking-widest text-xs uppercase block mb-2"># 3. TAREA (INSTRUCCIÓN PRINCIPAL):</span>
+    <span class="text-white font-bold text-lg leading-relaxed">"${c.k}"</span>
+</div>
+
+<div class="mb-6">
+    <span class="text-red-400 font-bold tracking-widest text-xs uppercase block mb-1"># 4. RESTRICCIONES:</span>
+    <span class="text-slate-400">"No inventes datos. Usa tono profesional corporativo. Sé conciso."</span>
+</div>
+
+<div class="mb-2">
+    <span class="text-orange-400 font-bold tracking-widest text-xs uppercase block mb-1"># 5. FORMATO DE ENTREGA:</span>
+    <span class="text-white border-b border-orange-400 inline-block pb-1">"${c.f}"</span>
+</div>
+            `;
         }
 
-        promptSelector.addEventListener('change', (e) => renderPrompt(e.target.value));
+        caseSel.addEventListener('change', (e) => updateCase(e.target.value));
+
+        function copyPromptText() {
+            const text = caseOut.innerText;
+            navigator.clipboard.writeText(text).then(() => alert("Prompt copiado al portapapeles."));
+        }
+
+        // --- LOGIC: MONITOR ---
+        document.getElementById('toolTable').innerHTML = toolDB.map(t => `
+            <tr class="hover:bg-gray-50 transition border-b border-gray-100">
+                <td class="p-4 font-bold text-slate-800">${t.n}</td>
+                <td class="p-4 text-[10px] font-bold text-ean-blue uppercase">${t.c}</td>
+                <td class="p-4 text-xs text-slate-600">${t.u}</td>
+                <td class="p-4 text-center"><a href="${t.l}" target="_blank" class="text-ean-blue font-bold text-[10px] uppercase border border-ean-blue px-3 py-1 rounded-full hover:bg-ean-blue hover:text-white transition">Visitar</a></td>
+            </tr>
+        `).join('');
+
+        // --- LOGIC: SIMULADOR ---
+        const simSel = document.getElementById('simSelector');
         
-        function copyPrompt() {
-            // Simulación de copiado
-            const btn = document.querySelector('button i.far.fa-copy');
-            btn.className = "fas fa-check text-green-400";
-            setTimeout(() => btn.className = "far fa-copy", 2000);
-            alert("Prompt copiado al portapapeles.");
+        function initSim() {
+            simSel.innerHTML = scenarios.map((s, i) => `<option value="${i}">${s.t.substring(0, 60)}...</option>`).join('');
+            loadScenario(0);
         }
 
-        function forceScan() { scanNetwork(); }
+        function loadScenario(idx) {
+            const s = scenarios[idx];
+            document.getElementById('simText').innerText = `"${s.t}"`;
+            document.getElementById('simToolDisplay').innerText = s.h;
+            document.getElementById('simPromptDisplay').innerText = s.s;
+            document.getElementById('simSolution').classList.add('hidden');
+        }
 
-        // Init
-        renderTable(displayTools);
-        renderPrompt(0);
+        simSel.addEventListener('change', (e) => loadScenario(e.target.value));
+
+        function randomScenario() {
+            const r = Math.floor(Math.random() * scenarios.length);
+            simSel.value = r; 
+            loadScenario(r);
+        }
+
+        function revealSimSolution() {
+            document.getElementById('simSolution').classList.remove('hidden');
+        }
+
+        // --- INIT ---
+        initLab();
+        initSim();
 
     </script>
 </body>
