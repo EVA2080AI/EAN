@@ -25,42 +25,29 @@
     </script>
 
     <style>
-        /* FONDO RESTAURADO: Blanco/Gris muy claro para máxima legibilidad */
+        /* FONDO */
         body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f8fafc; color: #1e293b; line-height: 1.6; }
         
         /* Header Profesional */
         .header-pro { background: #000000; border-bottom: 3px solid #84cc16; }
         
-        /* Secciones Claras */
+        /* Secciones */
         section { scroll-margin-top: 100px; padding: 4rem 1rem; border-bottom: 1px solid #e2e8f0; }
         
-        /* Badges de Capítulos */
+        /* Badges */
         .chapter-badge { 
-            font-size: 0.75rem; 
-            font-weight: 800; 
-            color: #003366; 
-            background: #ecfccb; 
-            padding: 0.3rem 0.8rem; 
-            border-radius: 4px; 
-            text-transform: uppercase; 
-            margin-bottom: 1rem; 
-            display: inline-block; 
-            letter-spacing: 0.05em; 
-            border: 1px solid #84cc16;
+            font-size: 0.75rem; font-weight: 800; color: #003366; background: #ecfccb; 
+            padding: 0.3rem 0.8rem; border-radius: 4px; text-transform: uppercase; 
+            margin-bottom: 1rem; display: inline-block; letter-spacing: 0.05em; border: 1px solid #84cc16;
         }
         
         /* Consola Prompt */
-        .terminal-window { 
-            background-color: #0f172a; 
-            border: 1px solid #334155; 
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); 
-        }
+        .terminal-window { background-color: #0f172a; border: 1px solid #334155; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); }
         
         /* Scrollbar */
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
         ::-webkit-scrollbar-thumb { background: #003366; border-radius: 5px; }
-        ::-webkit-scrollbar-thumb:hover { background: #84cc16; }
     </style>
 </head>
 <body class="antialiased selection:bg-ean-lime selection:text-white">
@@ -71,7 +58,7 @@
                 <img src="https://universidadean.edu.co/sites/default/files/logo-horizontal-es.png" alt="Ean" class="h-8 w-auto brightness-0 invert">
                 <div class="hidden lg:block border-l border-white/20 pl-4 text-white">
                     <p class="text-[10px] text-ean-lime font-bold uppercase tracking-widest">Diplomado Alta Dirección</p>
-                    <p class="text-xs font-bold uppercase tracking-tight">AI Management Hub v11.0</p>
+                    <p class="text-xs font-bold uppercase tracking-tight">AI Management Hub v12.0</p>
                 </div>
             </div>
             <div class="hidden xl:flex gap-6 text-[10px] font-bold text-gray-300 uppercase tracking-widest items-center">
@@ -86,13 +73,38 @@
         </div>
     </nav>
 
-    <header class="pt-32 pb-20 bg-ean-dark text-white text-center relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-b from-blue-900/20 to-transparent"></div>
-        <div class="max-w-4xl mx-auto px-4 relative z-10">
-            <h1 class="text-4xl md:text-6xl font-black mb-6 tracking-tight">Estrategia Gerencial con <br><span class="text-ean-lime">Inteligencia Artificial</span></h1>
-            <p class="text-slate-300 text-lg leading-relaxed max-w-2xl mx-auto">
-                Plataforma de comando: Fundamentos, Ingeniería de Prompts, Herramientas y Simulación de Crisis.
-            </p>
+    <header class="pt-32 pb-20 bg-ean-dark text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-transparent"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center gap-12">
+            
+            <div class="md:w-1/2 text-center md:text-left">
+                <div class="inline-block px-3 py-1 border border-ean-lime rounded-full text-[10px] font-bold text-ean-lime mb-4 uppercase tracking-widest">
+                    Centro de Comando Ejecutivo
+                </div>
+                <h1 class="text-4xl md:text-6xl font-black mb-6 tracking-tight leading-tight">
+                    Estrategia Gerencial con <span class="text-ean-lime">IA Generativa</span>
+                </h1>
+                <p class="text-slate-300 text-lg leading-relaxed mb-8">
+                    Domine los fundamentos, la ingeniería de prompts y la simulación de crisis. Herramientas diseñadas para la toma de decisiones en la Alta Dirección.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#lab" class="px-8 py-4 bg-ean-lime text-black font-bold rounded-lg hover:bg-white transition flex items-center justify-center gap-2 shadow-lg shadow-lime-900/20">
+                        <i class="fas fa-flask"></i> Ir al Laboratorio
+                    </a>
+                    <a href="#actividad" class="px-8 py-4 border border-gray-500 text-white font-bold rounded-lg hover:bg-white/10 transition flex items-center justify-center gap-2">
+                        <i class="fas fa-gamepad"></i> Simulador
+                    </a>
+                </div>
+            </div>
+
+            <div class="md:w-1/2 flex justify-center md:justify-end">
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-ean-lime to-blue-600 rounded-[2rem] blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                    <img src="https://eva2080ai.github.io/EAN/diplomado.jpg" alt="Diplomado IA Ean" class="relative rounded-[2rem] shadow-2xl border-4 border-gray-800 w-full max-w-md object-cover transform transition duration-500 hover:scale-[1.02]">
+                </div>
+            </div>
+
         </div>
     </header>
 
@@ -104,7 +116,7 @@
                 <h2 class="text-3xl font-bold text-ean-blue mb-4">Fundamentos de Interacción</h2>
                 <div class="prose prose-slate max-w-none text-slate-700 mb-8">
                     <p class="text-lg"><strong>Objetivo:</strong> Comprender que la IA no es un buscador (Google), sino un <strong>Motor de Razonamiento Probabilístico</strong>.</p>
-                    <p>Para decisiones ejecutivas, debemos cambiar el "chip": no pida datos exactos (la IA puede alucinar), delegue procesos de análisis y redacción.</p>
+                    <p>Para decisiones ejecutivas, debemos cambiar el "chip": no pida datos exactos sin verificar (la IA puede alucinar), delegue procesos de análisis, redacción y síntesis.</p>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -182,18 +194,22 @@
                 <div class="p-4 border border-gray-200 rounded-lg hover:bg-blue-50 transition">
                     <i class="fas fa-chart-pie text-2xl text-blue-600 mb-2"></i>
                     <h4 class="font-bold text-slate-800">Análisis</h4>
+                    <p class="text-xs text-slate-500 mt-1">De Datos -> Insights</p>
                 </div>
                 <div class="p-4 border border-gray-200 rounded-lg hover:bg-green-50 transition">
                     <i class="fas fa-filter text-2xl text-green-600 mb-2"></i>
                     <h4 class="font-bold text-slate-800">Síntesis</h4>
+                    <p class="text-xs text-slate-500 mt-1">De Ruido -> Señal</p>
                 </div>
                 <div class="p-4 border border-gray-200 rounded-lg hover:bg-purple-50 transition">
                     <i class="fas fa-chess text-2xl text-purple-600 mb-2"></i>
                     <h4 class="font-bold text-slate-800">Planificación</h4>
+                    <p class="text-xs text-slate-500 mt-1">De Idea -> Hoja de Ruta</p>
                 </div>
                 <div class="p-4 border border-gray-200 rounded-lg hover:bg-orange-50 transition">
                     <i class="fas fa-bullhorn text-2xl text-orange-600 mb-2"></i>
                     <h4 class="font-bold text-slate-800">Comunicación</h4>
+                    <p class="text-xs text-slate-500 mt-1">De Complejo -> Simple</p>
                 </div>
             </div>
         </section>
@@ -294,7 +310,7 @@
                 </div>
 
                 <div id="simSolution" class="hidden text-left max-w-4xl mx-auto bg-green-50 border border-green-200 p-8 rounded-3xl animate-fade-in-up shadow-inner">
-                    <h4 class="text-green-800 font-black uppercase text-[10px] tracking-widest mb-6 border-b border-green-200 pb-2">Plan Recomendado:</h4>
+                    <h4 class="text-green-800 font-black uppercase text-xs tracking-widest mb-6 border-b border-green-200 pb-2">Plan Recomendado:</h4>
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                         <div class="md:col-span-1">
                             <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Herramienta</span>
@@ -394,7 +410,7 @@
             `;
             // Console Output
             caseOut.innerHTML = `
-<div class="mb-6 text-gray-500 text-xs tracking-widest">// INICIO DEL PROMPT v9.0</div>
+<div class="mb-6 text-gray-500 text-xs tracking-widest">// INICIO DEL PROMPT v11.0</div>
 
 <div class="mb-6">
     <span class="text-blue-400 font-bold tracking-widest text-xs uppercase block mb-1"># 1. ROL (ACTÚA COMO):</span>
